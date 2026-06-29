@@ -3,3 +3,7 @@ Timestamp,Test Name,Path Length,Execution Time (sec)
 2026-06-28 20:59:41,Dynamic Test,15,0.0003
 2026-06-28 21:00:26,Static Test,19,0.0003
 2026-06-28 21:00:26,Dynamic Test,15,0.0002
+2026-06-29 07:26:25,Static Test,19,0.0008
+2026-06-29 07:26:25,Dynamic Test,15,0.0004
+2026-06-29 19:26:39,A-Star Search,19,0.000256
+2026-06-29 19:26:39,Dijkstra Baseline,19,0.000272

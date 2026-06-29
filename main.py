@@ -1,6 +1,6 @@
 import time
 from environment import DisasterGrid
-from ai_engine import a_star_search
+from ai_engine import a_star_search, dijkstra_search # Import both
 from logger import log_path
 
 def reconstruct_path(came_from, start, goal):
@@ -16,28 +16,21 @@ def reconstruct_path(came_from, start, goal):
 
 # Run System
 world = DisasterGrid()
-print("Initial Disaster Grid Map:")
-world.display()
 
+# --- 1. Run A* (Your Main Model) ---
 start_time = time.time()
-path_data = a_star_search(world.grid, world.start, world.goal)
-path = reconstruct_path(path_data, world.start, world.goal)
-exec_time = time.time() - start_time
+path_data_a = a_star_search(world.grid, world.start, world.goal)
+exec_time_a = time.time() - start_time
+path_a = reconstruct_path(path_data_a, world.start, world.goal)
+if path_a:
+    log_path("A-Star Search", len(path_a), f"{exec_time_a:.6f}")
 
-if path:
-    print(f"\nInitial Path: {path}")
-    log_path("Static Test", len(path), f"{exec_time:.4f}")
-
-# Dynamic Update
-print("\n--- SENSOR UPDATE: New obstacle detected at (0, 5)! ---")
-world.add_obstacle(0, 5)
-world.display()
-
+# --- 2. Run Dijkstra (Baseline Model) ---
 start_time = time.time()
-new_path_data = a_star_search(world.grid, (0, 4), world.goal)
-new_path = reconstruct_path(new_path_data, (0, 4), world.goal)
-exec_time = time.time() - start_time
+path_data_d = dijkstra_search(world.grid, world.start, world.goal)
+exec_time_d = time.time() - start_time
+path_d = reconstruct_path(path_data_d, world.start, world.goal)
+if path_d:
+    log_path("Dijkstra Baseline", len(path_d), f"{exec_time_d:.6f}")
 
-if new_path:
-    print(f"New Path: {new_path}")
-    log_path("Dynamic Test", len(new_path), f"{exec_time:.4f}")
+print("Tests complete. Check performance_log.csv for data.")
